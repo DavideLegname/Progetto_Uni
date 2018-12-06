@@ -19,7 +19,11 @@ typedef nodo_lista* lista;
 
 void ini_lista(lista *lis);
 void agg_coda_lista(lista *lis, char *elemento);
+void rimuovi_cartella(lista *lis, char *elemento);
+void unisci_liste(lista *lis1, lista *lis2);
+int letta(char *elemento);
 void stampa_lista(lista lis);
+void *funzione_t(void *arg);
 
 
 	char buffer[256];
@@ -94,6 +98,27 @@ void agg_coda_lista(lista *lis, char *elemento){
 void stampa_lista(lista lis){
 	while(lis != NULL){
 	printf("%s  \n", lis->info);
+	lis = lis->next;
+	}
+}
+void *funzione_t(void *arg){
+	char *cartella = (char *) arg;
+	lista l_temporanea;
+	ini_lista(&l_temporanea);
+	struct dirent *de;
+	DIR *dr;
+
+	while(lis != NULL){
+	if(dr = opendir(cartella) != NULL){
+	if(letta(cartella) == 0){
+	rimuovi_cartella(cartella);
+	while(de = readdir(dr) != NULL){
+	agg_coda_lista(&l_temporanea, de->d_name);
+		    }
+		unisci_liste(&l1, &l_temporanea);
+		}
+	    closedir(dr);
+	    }
 	lis = lis->next;
 	}
 }
