@@ -8,6 +8,8 @@
 #include <string.h>
 #include <sys/sysinfo.h>
 
+
+
 typedef struct nodo_t{
 char info[256];
 struct nodo_t *next;
@@ -22,6 +24,7 @@ void stampa_lista(lista lis);
 
 	char buffer[256];
 	lista l1;
+	lista cartelle_lette;
 
 
 int main(void){
@@ -29,6 +32,7 @@ int main(void){
 	int cores = get_nprocs();
 	
 	ini_lista(&l1);
+	ini_lista(&cartelle_lette);
 
 
 	struct dirent *de;
@@ -50,7 +54,13 @@ int main(void){
 	agg_coda_lista(&l1, de->d_name);	
 	}
 	closedir(dr);
+	agg_coda_lista(&cartelle_lette, buffer);
 	stampa_lista(l1);
+
+	while(cores > 0){
+	cores --;
+	}
+
 	exit(EXIT_SUCCESS);	
 }
 
