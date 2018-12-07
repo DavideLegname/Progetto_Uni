@@ -75,11 +75,10 @@ void ini_lista(lista *lis){
 void agg_coda_lista(lista *lis, char *elemento){
 	lista appoggio;
 	char appoggio_stringa[256];
-	strcpy(appoggio_stringa, buffer);
 	
 	if(*lis == NULL){
 	*lis = malloc(sizeof(nodo_lista));
-	strcpy((*lis)->info, strcat(appoggio_stringa,elemento));
+	strcpy((*lis)->info, elemento);
 	(*lis)->next = NULL;
 	return;
 	}
@@ -101,24 +100,73 @@ void stampa_lista(lista lis){
 	lis = lis->next;
 	}
 }
+void unisci_liste(lista *lis1, lista *lis2){
+
+	lista appoggio = *lis1;
+	while(appoggio->next != NULL)
+	appoggio = appoggio->next;
+		
+	appoggio->next = *lis2;
+}
+int letta(char *elemento){
+
+	lista appoggio = cartelle_lette;
+	while(appoggio != NULL){
+
+		if(strcmp(elemento, appoggio->info) == 0){
+		
+		return 0;
+		
+		}	
+	appoggio = appoggio->next;
+	}
+	return 1;
+}
+void rimuovi_cartella(lista *lis, char *elemento){
+
+	if(*lis != NULL){
+
+		if(*lis->next != NULL){
+
+		lista appoggio = *lis;
+			while(appoggio->next != NULL){
+				if(strcmp(appoggio->next->info, elemento) == 0){
+				lista da_eliminare = appoggio->next;
+				appoggio->next = appoggio->next->next;
+				free(da_eliminare);
+				return;	
+				}
+				else
+				appoggio = appoggio->next;
+			}
+
+		}
+		if(strcmp((*lis)->info, elemento) == 0){
+		lista da_eliminare = *lis;
+		*lis = NULL;
+		free(da_eliminare);		
+		}
+	}
+
+}
 void *funzione_t(void *arg){
-	char *cartella = (char *) arg;
-	lista l_temporanea;
-	ini_lista(&l_temporanea);
+	char *cartella;
 	struct dirent *de;
 	DIR *dr;
-
 	while(lis != NULL){
-	if(dr = opendir(cartella) != NULL){
-	if(letta(cartella) == 0){
-	rimuovi_cartella(cartella);
-	while(de = readdir(dr) != NULL){
-	agg_coda_lista(&l_temporanea, de->d_name);
-		    }
+	cartella = lis->info;
+		if(dr = opendir(cartella) != NULL){
+			if(letta(cartella) == 0){
+				lista l_temporanea;
+				ini_lista(&l_temporanea);
+				rimuovi_cartella(&l1, cartella);
+				while(de = readdir(dr) != NULL){
+					agg_coda_lista(&l_temporanea, de->d_name);
+		    		}
 		unisci_liste(&l1, &l_temporanea);
-		}
+		         }
 	    closedir(dr);
-	    }
+	         }
 	lis = lis->next;
 	}
 }
