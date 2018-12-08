@@ -125,8 +125,9 @@ int letta(char *elemento){
 void rimuovi_cartella(lista *lis, char *elemento){
 
 	if(*lis != NULL){
+	
 
-		if(*lis->next != NULL){
+		if((*lis)->next != NULL){
 
 		lista appoggio = *lis;
 			while(appoggio->next != NULL){
@@ -150,23 +151,24 @@ void rimuovi_cartella(lista *lis, char *elemento){
 
 }
 void *funzione_t(void *arg){
+	lista appoggio = l1;
 	char *cartella;
 	struct dirent *de;
 	DIR *dr;
-	while(lis != NULL){
-	cartella = lis->info;
+	while(appoggio != NULL){
+	cartella = appoggio->info;
 		if(dr = opendir(cartella) != NULL){
 			if(letta(cartella) == 0){
 				lista l_temporanea;
 				ini_lista(&l_temporanea);
 				rimuovi_cartella(&l1, cartella);
-				while(de = readdir(dr) != NULL){
+				while((de = readdir(dr)) != NULL){
 					agg_coda_lista(&l_temporanea, de->d_name);
 		    		}
 		unisci_liste(&l1, &l_temporanea);
 		         }
 	    closedir(dr);
 	         }
-	lis = lis->next;
+	appoggio = appoggio->next;
 	}
 }
